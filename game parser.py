@@ -100,17 +100,17 @@ for player in (1, 2):
     t, eapm = map(smoothing_function, (t, eapm))
     ax.plot(t, eapm, color=color, alpha=1.0)
 
-    # Legend.
-    c = "grey"
-    handles = (mpl.lines.Line2D([], [], color=c, lw=4),
-               mpl.lines.Line2D([], [], color=c, lw=0, marker="o", markersize=8, alpha=0.3))
-    labels = (f"Smooth data ({n=})",
-              "Raw data")
-    ax.legend(handles, labels, loc="upper left", bbox_to_anchor=(1.03, 1), numpoints=3)
-
+# Legend and labels.
+c = "grey"
+handles = (mpl.lines.Line2D([], [], color=c, lw=4),
+           mpl.lines.Line2D([], [], color=c, lw=0, marker="o", markersize=8, alpha=0.3))
+labels = (f"Smooth data ({n=})",
+          "Raw data")
+ax.legend(handles, labels, loc="upper left", bbox_to_anchor=(1.03, 1), numpoints=3)
 fig.tight_layout()
 ax.set_xlabel("Game ticks")
 ax.set_ylabel(f"Actions per time section\n({dt} ticks)")
 ax.set_title("APM(time)")
+
 fig.canvas.draw()
 
