@@ -55,14 +55,14 @@ def operations_per_time_increment(operations:list, dt:int) -> list:
 
 
 
-def player_eapm_over_time_increment(operations, player_id:int, dt:int) -> (list, list):
+def player_actions_over_time_increment(operations, player_id:int, dt:int) -> (list, list):
 
     actions = get_player_actions(operations, player_id)
     actions = operations_per_time_increment(actions, dt)
-    local_eapms = [len(subactions) for subactions in actions]
+    local_apms = [len(subactions) for subactions in actions]
     last_time:int = actions[-1][-1].start
     times = np.linspace(0, last_time, len(actions))
-    return times, local_eapms
+    return times, local_apms
 
 
 
@@ -88,17 +88,17 @@ for player in (1, 2):
     color = {1: "red", 2: "blue"}[player]
 
     # Plot the raw data.
-    t, eapm = player_eapm_over_time_increment(operations, player, dt)
-    ax.scatter(t, eapm, color=color, alpha=0.15)
+    t, apm = player_actions_over_time_increment(operations, player, dt)
+    ax.scatter(t, apm, color=color, alpha=0.15)
 
     # Plot smoothed data.
         # Pad the borders before smoothing data.
     t = np.insert(t, 0, [0]*n)
     t = np.insert(t, -1, [t[-1]]*n)
-    eapm = np.pad(eapm, n, mode="constant", constant_values=0)
+    apm = np.pad(apm, n, mode="constant", constant_values=0)
 
-    t, eapm = map(smoothing_function, (t, eapm))
-    ax.plot(t, eapm, color=color, alpha=1.0)
+    t, apm = map(smoothing_function, (t, apm))
+    ax.plot(t, apm, color=color, alpha=1.0)
 
 # Legend and labels.
 c = "grey"
